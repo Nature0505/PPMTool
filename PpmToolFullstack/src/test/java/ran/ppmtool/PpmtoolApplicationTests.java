@@ -1,4 +1,4 @@
-package ran.com.ppmtool;
+package ran.ppmtool;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
