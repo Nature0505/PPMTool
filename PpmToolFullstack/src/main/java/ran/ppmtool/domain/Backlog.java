@@ -1,9 +1,10 @@
 package ran.ppmtool.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Backlog {
@@ -11,10 +12,17 @@ public class Backlog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
     private Integer PTSequence = 0;
-    private String ProjectIdentifier;
+    private String projectIdentifier;
 
     //One to one with Project, each project has a backlog
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "project_id",nullable = false)
+    @JsonIgnore
+    private Project project;
     //One to many project tasks
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "backlog")
+    private List<ProjectTask> projectTasks = new ArrayList<>();
+
     public Backlog(){
 
     }
@@ -36,10 +44,26 @@ public class Backlog {
     }
 
     public String getProjectIdentifier() {
-        return ProjectIdentifier;
+        return projectIdentifier;
     }
 
     public void setProjectIdentifier(String projectIdentifier) {
-        ProjectIdentifier = projectIdentifier;
+        this.projectIdentifier = projectIdentifier;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
+    public List<ProjectTask> getProjectTasks() {
+        return projectTasks;
+    }
+
+    public void setProjectTasks(List<ProjectTask> projectTasks) {
+        this.projectTasks = projectTasks;
     }
 }
