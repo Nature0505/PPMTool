@@ -20,6 +20,12 @@ public class ProjectTaskService {
 
     public ProjectTask addProjectTask(String projectIdentifier, ProjectTask projectTask){
         //Exception: No project
+        /*
+        {
+            ProjectNotFound : "Project not found"
+        }
+        */
+
         //PTs to be a specific project, project != null, Backlog exists
         Backlog backlog = backlogRepository.findByProjectIdentifier(projectIdentifier);
 
